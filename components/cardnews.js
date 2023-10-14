@@ -1,4 +1,4 @@
-class cardnews extends HTMLElement{
+class cardnews extends HTMLElement {
     constructor() {
         super();
 
@@ -7,28 +7,107 @@ class cardnews extends HTMLElement{
         shadow.appendChild(this.styles());
     }
 
-    build() { 
+    build() {
         const componentRoot = document.createElement("div");
         componentRoot.setAttribute("class", "card");
 
         const cardLeft = document.createElement("div");
         cardLeft.setAttribute("class", "card-left");
 
+        const autor = document.createElement("span");
+        autor.textContent = "By " + (this.getAttribute("autor") || "Anonymous");
+
+        const linkTitle = document.createElement("a");
+        linkTitle.textContent = this.getAttribute("title")
+        linkTitle.href = this.getAttribute("link-url");
+
+        const newsContent = document.createElement("p");
+        newsContent.textContent = this.getAttribute("content")
+
+        cardLeft.appendChild(autor);
+        cardLeft.appendChild(linkTitle);
+        cardLeft.appendChild(newsContent);
+
         const cardRight = document.createElement("div");
         cardRight.setAttribute("class", "card-right");
 
+        const newsImage = document.createElement("img");
+        newsImage.src = this.getAttribute("photo") || "assets/foto-default.jpg";
+        newsImage.alt = "Foto da Notícia";
+        
+        cardRight.appendChild(newsImage);
+
+
         componentRoot.appendChild(cardLeft);
         componentRoot.appendChild(cardRight);
-
+        
         return componentRoot;
 
 
     }
     
-    styles() {}
+    styles() {
+        const style = document.createElement("style");
+        style.textContent = `
+       
+    
+    .card {
+        width: 80%;
+        box-shadow:  5px 6px 13px 0px rgba(0,0,0,0.75);;
+        -webkit-box-shadow: 5px 6px 13px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 5px 6px 13px 0px rgba(0,0,0,0.75);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 5px;
+        border-radius: 10px;
+    
+        background-color: #fff;
+    
+    }
+    
+    .card-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 10px;
+    }
+    
+    .card-left>span {
+        font-weight: 400;
+    }
+    
+    .card-left>a {
+        margin-top: 15px;
+        font-size: 25px;
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    .card-left>a:hover {
+        color: #3772ff;
+    }
+    
+    .card-left>p {
+        color: #808080;
+        margin-top: 10px;
+    
+    }
+
+    .card-right>img {
+        border-radius: 5%;
+        overflow: hidden;
+        margin: 5px 5px 5px 3px;   
+        
+    }
+    
+      `;
+
+        return style;
 
 
-
+    }
 
 }
 
